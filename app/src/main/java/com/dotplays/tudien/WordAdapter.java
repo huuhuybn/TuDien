@@ -1,11 +1,13 @@
 package com.dotplays.tudien;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -33,7 +35,22 @@ public class WordAdapter extends RecyclerView.Adapter<WordHolder> {
     @Override
     public void onBindViewHolder(@NonNull WordHolder holder, int position) {
 
-        holder.tvWord.setText(wordList.get(position).word);
+        final Word word = wordList.get(position);
+        holder.tvWord.setText(word.word);
+
+        holder.tvWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder
+                        = new AlertDialog.Builder(context);
+
+
+                builder.setTitle(word.word);
+                builder.setMessage(Html.fromHtml(word.html));
+
+                builder.show();
+            }
+        });
 
     }
 

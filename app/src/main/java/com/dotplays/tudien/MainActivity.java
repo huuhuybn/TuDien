@@ -55,34 +55,25 @@ public class MainActivity extends AppCompatActivity {
         lvList.setLayoutManager(linearLayoutManager);
 
 
-        edtText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                search(charSequence.toString());
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
     }
 
-    public void search(String word) {
+    public void search(View view) {
 
-        List<Word> wordList = dataBaseHelper.searchWord(word);
+        String word = edtText.getText().toString().trim();
 
-        this.wordList.addAll(wordList);
-        wordAdapter.notifyDataSetChanged();
-        
+        // kiểm tra nếu người dùng chưa nhập gì thì dừng lại và thông báo lỗi
+        if (word.isEmpty()) {
+            edtText.setError("Vui lòng nhập dữ liệu !!!");
+            return;
+            // nếu chữ ko empty thì tiếp tục tìm kiếm và hiển thị danh sách kết quả lên list nếu có
+        } else {
+
+            List<Word> wordList = dataBaseHelper.searchWord(word);
+            this.wordList.addAll(wordList);
+            wordAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
 }
